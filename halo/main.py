@@ -20,3 +20,4 @@ if __name__ == '__main__':
     ahg.extract(telemetry_data)
 
     Logger.info(f'Attribute Hierarchy Graph：{ahg.attrs}\n')
+    Logger.info(ahg.random_walk(telemetry_data))

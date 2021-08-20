@@ -2,6 +2,7 @@ from typing import List, OrderedDict as Dict
 from dataclasses import dataclass, field
 from itertools import combinations
 from collections import OrderedDict
+from functools import lru_cache
 
 from halo.data import Attr, TelemetryData
 
@@ -34,7 +35,7 @@ class AHG:
         ahg.remaining_attrs.get(attr.name).set_level(change_level)
         skeleton_len = len(self.skeleton)
 
-        # @lru_cache(maxsize=skeleton_len)
+        @lru_cache(maxsize=skeleton_len)
         def attrs_and_count_by_level(level):
             current_attrs = ahg.get_attrs_by_level(level)
             current_count, next_count = len(current_attrs), len(ahg.get_attrs_by_level(level + 1))
@@ -66,3 +67,16 @@ class AHG:
             Logger.info(f'{remaining_attr.name}各层obj分数: {objs}，{remaining_attr.name} set level={min(objs)[1]}')
             min_obj_level = min(objs)[1]
             remaining_attr.set_level(min_obj_level)
+
+    def random_walk(self, telemetry_data: TelemetryData):
+        def walk(path: Attr):
+            yield path.name
+            children = list(path.children)
+            if children:
+                max_score_index = max(
+                    enumerate([telemetry_data.random_score(_.name) for _ in children]),
+                    key=lambda _: _[1]
+                )[0]
+                yield from walk(children[max_score_index])
+
+        return list(walk(self.attrs[0]))
