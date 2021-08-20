@@ -17,13 +17,35 @@ The paper is mainly divided into two parts.
 
 ## code
 
+The code passed the test on Python 3.8 and 3.9. In addition to [typing and dataclass], earlier versions should also support
+<br>
+
 Most of the code follows the paper, except for the following
 
 * Maybe it's my understanding. I think the denominator of the following formula may be 0 (when the layer has only one attribute), so I added 1 after it
 
-![image-20210820211851363](C:\Users\cb229\AppData\Roaming\Typora\typora-user-images\image-20210820211851363.png)
-$$
-I_i = \frac{\sum_{j=1}\sum_{k=1}HI(H_i^j\to H_i^k)}{|H_i|*(|H_i|-1)/2}
-$$
+![image-20210820211851363](http://lbj.wiki/static/images/fed2e018-01b9-11ec-9928-00163e30ead3.png)
+
+## use
+
+1. ```shell
+   cd HALO/
+   pip install requirements.txt      //Installation dependency
+   ```
+
+2. ```shell
+   cd HALO/
+   python3 main.py					  //test case
+   ```
 
 
+
+ 
+
+## other
+
+Because the entropy relationship of the sample data provided in the paper is inconsistent with AHG, several values of API Attr are modified in the test data to increase its entropy. But there are still some small differences between the final results and the paper.
+
+<img src="http://lbj.wiki/static/images/3516b80a-01bc-11ec-9928-00163e30ead3.png" alt="image-20210820214039749" style="zoom:50%;" />
+
+<img src="http://lbj.wiki/static/images/44be877e-01bc-11ec-9928-00163e30ead3.png" alt="image-20210820214106031" style="zoom:50%;" />

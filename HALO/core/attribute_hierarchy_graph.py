@@ -4,7 +4,7 @@ from itertools import combinations
 from collections import OrderedDict
 from functools import lru_cache
 
-from halo.data import Attr, TelemetryData
+from HALO.data import Attr, TelemetryData
 
 from bools.log import Logger
 

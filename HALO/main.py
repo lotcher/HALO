@@ -5,8 +5,8 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
 sys.path.append(BASE_DIR)
 
-from halo.data import TelemetryData
-from halo.core import AHG
+from HALO.data import TelemetryData
+from HALO.core import AHG
 
 from bools.log import Logger
 
