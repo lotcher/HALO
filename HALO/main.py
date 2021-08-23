@@ -7,10 +7,15 @@ sys.path.append(BASE_DIR)
 
 from HALO.data import TelemetryData
 from HALO.core import AHG, Searcher
+from HALO.config import Config
 
 from bools.log import Logger
 
 if __name__ == '__main__':
+    Config.init(
+        damping_score_threshold=0.999,
+        sampling=2
+    )
     data = pd.read_csv(f'{BASE_DIR}/static/test_data.csv')
 
     telemetry_data = TelemetryData(data, 'Failures', 'Successes')
@@ -20,5 +25,4 @@ if __name__ == '__main__':
     ahg.extract(telemetry_data)
     search_paths = ahg.random_walk(telemetry_data)
 
-    Logger.info(f'Attribute Hierarchy Graph：{ahg.attrs}\n')
-    Logger.info(Searcher.search(telemetry_data, search_paths))
+    [Logger.info(comb) for comb in Searcher.search(telemetry_data, search_paths)]

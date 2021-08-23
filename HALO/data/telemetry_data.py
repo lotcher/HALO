@@ -7,6 +7,7 @@ import pandas as pd
 
 from .attr import Attr
 from .value import Combination
+from HALO.config import Config
 
 
 @dataclass(unsafe_hash=True)
@@ -50,7 +51,7 @@ class TelemetryData:
         return 1 - (self.conditional_entropy(an1, an2) / self.entropy(an1)) \
             if self.entropy(an1) < self.entropy(an2) else -np.inf
 
-    def random_score(self, attr_name, sampling=2):
+    def random_score(self, attr_name, sampling=Config.sampling):
         sample = self.df.iloc[self.df[attr_name].sample(sampling).index].sum()
         return int(sample[self.failure_col]) / int(sample[self.success_col])
 

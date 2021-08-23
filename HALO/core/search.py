@@ -3,9 +3,10 @@ from functools import reduce
 from operator import add
 
 import numpy as np
+from bools.log import Logger
 
 from HALO.data import TelemetryData, Pair, Combination
-from bools.log import Logger
+from HALO.config import Config
 
 
 class Searcher:
@@ -22,7 +23,7 @@ class Searcher:
                 combs_with_scores.append(
                     (current_comb, telemetry_data.election_score(current_comb))
                 )
-                if telemetry_data.damping_score(current_comb) > 0.999:
+                if telemetry_data.damping_score(current_comb) > Config.damping_score_threshold:
                     yield current_comb
             for c in cls.next_search_combs(combs_with_scores):
                 yield from find(c, paths[1:])

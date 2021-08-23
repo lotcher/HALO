@@ -5,6 +5,7 @@ from collections import OrderedDict
 from functools import lru_cache
 
 from HALO.data import Attr, TelemetryData
+from HALO.config import Config
 
 from bools.log import Logger
 
@@ -67,6 +68,7 @@ class AHG:
             Logger.info(f'{remaining_attr.name}各层obj分数: {objs}，{remaining_attr.name} set level={min(objs)[1]}')
             min_obj_level = min(objs)[1]
             remaining_attr.set_level(min_obj_level)
+        Logger.info(f'Attribute Hierarchy Graph：{self.attrs}\n')
 
     def random_walk(self, telemetry_data: TelemetryData):
         def walk(path: Attr):
@@ -74,7 +76,7 @@ class AHG:
             children = list(path.children)
             if children:
                 max_score_index = max(
-                    enumerate([telemetry_data.random_score(_.name) for _ in children]),
+                    enumerate([telemetry_data.random_score(_.name, Config.sampling) for _ in children]),
                     key=lambda _: _[1]
                 )[0]
                 yield from walk(children[max_score_index])
