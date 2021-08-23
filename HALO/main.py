@@ -6,7 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
 sys.path.append(BASE_DIR)
 
 from HALO.data import TelemetryData
-from HALO.core import AHG
+from HALO.core import AHG, Searcher
 
 from bools.log import Logger
 
@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
     ahg = AHG(telemetry_data.attrs)
     ahg.extract(telemetry_data)
+    search_paths = ahg.random_walk(telemetry_data)
 
     Logger.info(f'Attribute Hierarchy Graph：{ahg.attrs}\n')
-    Logger.info(ahg.random_walk(telemetry_data))
+    Logger.info(Searcher.search(telemetry_data, search_paths))
