@@ -20,11 +20,12 @@ class Searcher:
             combs_with_scores = []
             for v in telemetry_data.values(paths[0]):
                 current_comb = comb + Pair(paths[0], v)
+                election_score = telemetry_data.election_score(current_comb)
                 combs_with_scores.append(
-                    (current_comb, telemetry_data.election_score(current_comb))
+                    (current_comb, election_score)
                 )
                 if telemetry_data.damping_score(current_comb) > Config.damping_score_threshold:
-                    yield current_comb
+                    yield current_comb, election_score
             for c in cls.next_search_combs(combs_with_scores):
                 yield from find(c, paths[1:])
 
