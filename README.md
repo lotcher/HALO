@@ -26,6 +26,9 @@ Most of the code follows the paper, except for the following
 
 ![image-20210820211851363](http://lbj.wiki/static/images/fed2e018-01b9-11ec-9928-00163e30ead3.png)
 
+* By default, only one path will be sampled for search
+* [Reverse Truncation] is not implemented because I personally think fault information should be given as much as possible, which is not necessarily redundant
+
 ## use
 
 1. ```shell
